@@ -1,0 +1,20 @@
+inherit_from:
+ - ./rubocop/.rubocop_airbnb.yml
+ - ./rubocop/.rubocop_enabled.yml
+ - ./rubocop/.rubocop_disabled.yml
+
+Rails:
+ Enabled: true
+
+AllCops:
+ Exclude:
+   - 'vendor/**/*'
+   - 'node_modules/**/*'
+   - 'config/unicorn.rb'
+   - 'bin/*'
+   - 'db/**/*'
+   - 'script/rails'
+   - 'config/**/*'
+   - '**/Capfile'
+   - '**/Guardfile'
+ TargetRubyVersion: 2.7.3

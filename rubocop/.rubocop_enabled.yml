@@ -1,0 +1,7 @@
+Metrics/LineLength:
+ Max: 100
+Metrics/BlockNesting:
+ Max: 3
+Style/ClassCheck:
+ Description: "Enforces consistent use of `Object#is_a?` or `Object#kind_of?`."
+ Enabled: true
