@@ -1,0 +1,2 @@
+class LoadNews < ServiceBase
+end
