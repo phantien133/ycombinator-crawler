@@ -1,14 +1,20 @@
 class Crawler::CrawMetaPost < Crawler::Base
   SOCIAL_TAG = %w(twitter fb og).freeze
+  PERMITTED_SIZE = 200
 
-  def execute(url)
-    return if url.blank?
-    doc = load_doc(url)
-    return unless detectable?(doc)
+  def execute(url:, doc: nil)
+    doc ||= load_doc(url)
+    return {} unless crawlable?(doc)
     meta = pick_meta_data(doc)
+
     image = meta[:image] || pick_content_image(doc)
     meta[:image] = correct_href(image, url) if image.present?
+
+    content = read_content(doc)
+    meta[:content] = content if content.present?
     meta
+  rescue Crawler::Errors::Uncrawable
+    {}
   end
 
   private
@@ -21,7 +27,7 @@ class Crawler::CrawMetaPost < Crawler::Base
         tag_meta[tag.to_sym] = node['content'] if node.present?
       end
       break tag_meta if tag_meta.present?
-    end
+    end.tap { |meta| meta[:crawable] = true }
   end
 
   def pick_content_image(doc)
@@ -33,8 +39,14 @@ class Crawler::CrawMetaPost < Crawler::Base
         image = img['src']
         max_size = width
       end
-      break if max_size >= 200
+      break if width >= PERMITTED_SIZE
     end
     image
+  end
+
+  def read_content(doc)
+    Readability::Document.new(doc).content
+  rescue
+    nil
   end
 end

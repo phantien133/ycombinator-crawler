@@ -1,13 +1,23 @@
 class Crawler::CrawList < Crawler::Base
+  include CacheHelper
+
   BA_YCOM_HOST = ENV['BA_YCOM_HOST']
   BA_YCOM_MORE_CONTENT = ENV['BA_YCOM_MORE_CONTENT']
 
   def execute(list_path:, page: nil)
     page ||= 1
-    doc = load_doc(BA_YCOM_HOST, "#{list_path}?#{{ page: page }.to_query}")
+    with_collection_cache(list_path, page.to_s) do
+      end_point = "#{list_path}?#{{ page: page }.to_query}"
+      doc = load_doc(BA_YCOM_HOST, end_point)
+      {
+        data: export_list(doc),
+        more: have_more?(doc),
+      }
+    end
+  rescue Crawler::Errors::Uncrawable
     {
-      data: export_list(doc),
-      more: have_more?(doc),
+      data: [],
+      more: false,
     }
   end
 
@@ -18,14 +28,15 @@ class Crawler::CrawList < Crawler::Base
       post = athing.css('td.title a.storylink').first
       link = post && post['href']
       site = athing.css('span.sitestr').first
+      id = athing['id']
       {
-        id: athing['id'],
+        id: id,
         rank: athing.css('td.title span.rank').first.content.to_s[0..-2],
         votelinks: [BA_YCOM_HOST, athing.css('td.votelinks a').first['href']].join('/'),
         title: post && post.content,
         link: link,
         site: site && site.content,
-        meta: Crawler::CrawMetaPost.execute(link),
+        meta: cache.fetch(id) { Crawler::CrawMetaPost.execute(url: link) },
       }
     end
   end
