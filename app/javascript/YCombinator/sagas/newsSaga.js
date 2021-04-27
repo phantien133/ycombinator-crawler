@@ -11,13 +11,15 @@ import { responseDataSelector } from '../selectors/newsSelector';
 import { newsApi } from '../services/api/NewsApi';
 
 export function* fetchNewsSaga(actions) {
+  const { payload: { page } } = actions;
   try {
-    const { payload: { page } } = actions;
     yield put(changePage(page));
     const response = yield call([newsApi, newsApi.list], page);
     yield put(updateNews(responseDataSelector(response.data)));
   } catch (e) {
-    // do nothing at the moment
+    setTimeout(function* () {
+      yield put(fetchNews(page));
+    }, 30000);
   }
 }
 

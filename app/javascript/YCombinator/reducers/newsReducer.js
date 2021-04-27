@@ -19,7 +19,7 @@ export default handleActions({
     ...state, ...action.payload, isLoading: false, updatedAt: new Date().getTime(),
   }),
   [changePage]: (state, action) => ({
-    ...state, page: action.payload, isLoading: true, updatedAt: new Date().getTime(),
+    ...state, page: action.payload, isLoading: true, more: false, updatedAt: new Date().getTime(),
   }),
   [cleanNews]: () => initialState,
 }, initialState);

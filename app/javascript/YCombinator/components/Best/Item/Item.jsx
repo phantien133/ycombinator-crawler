@@ -12,6 +12,7 @@ import { HackerNews, FallbackImg } from '../../../styles/images';
 import { breakpoint } from '../../../styles/mixins';
 
 const Container = styled.ul`
+  cursor: pointer;
   margin: 8px;
   background: ${(props) => props.theme.color.white};
   box-shadow: 0 1px 2px 0 rgba(40, 60, 80, 0.24), 0 -1px 2px 0 rgba(40, 60, 80, 0.12);

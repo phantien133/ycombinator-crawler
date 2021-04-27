@@ -6,8 +6,8 @@ class Crawler::CrawList < Crawler::Base
 
   def execute(list_path:, page: nil)
     page ||= 1
-    with_collection_cache(list_path, page.to_s) do
-      end_point = "#{list_path}?#{{ page: page }.to_query}"
+    with_collection_cache(list_path, page.to_s, expires_in: 1.hour) do
+      end_point = "#{list_path}?#{{ p: page }.to_query}"
       doc = load_doc(BA_YCOM_HOST, end_point)
       {
         data: export_list(doc),
