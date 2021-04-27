@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2 
+
+jobs:
+  build:
+    docker:
+      - image: quangtien133/ycombinator:latest
+    executor: ruby/default
+    steps:
+      - run:
+          name: cd to app
+          command: cd /rails_app
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: install package
+          command: yarn
+      - run:
+          name: check ruby conventions
+          command: rubocop
+      - run:
+          name: check ES conventions
+          command: yarn run lint
