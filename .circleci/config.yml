@@ -26,3 +26,10 @@ jobs:
       - run:
           name: check ES conventions
           command: yarn run lint
+  request-approval:
+    docker:
+      - image: quangtien133/ycombinator:latest
+    steps:
+      - ruby/notify:
+          recipients: Engineering Managers
+
