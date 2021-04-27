@@ -23,8 +23,13 @@ class Crawler::CrawList < Crawler::Base
 
   private
 
+  def pick_content(node, pick_method: :content)
+    node && node.public_send(pick_method)
+  end
+
   def export_list(doc)
     doc.css('tr.athing').map do |athing|
+      sub = athing.next
       post = athing.css('td.title a.storylink').first
       link = post && post['href']
       site = athing.css('span.sitestr').first
@@ -33,7 +38,11 @@ class Crawler::CrawList < Crawler::Base
         id: id,
         rank: athing.css('td.title span.rank').first.content.to_s[0..-2],
         votelinks: [BA_YCOM_HOST, athing.css('td.votelinks a').first['href']].join('/'),
-        title: post && post.content,
+        title: pick_content(post),
+        author: pick_content(sub.css('a.hnuser').first),
+        age: pick_content(sub.css('span.age a').first),
+        points: pick_content(sub.css('span.score').first),
+        comments: pick_content(sub.css('a').last),
         link: link,
         site: site && site.content,
         meta: cache.fetch(id) { Crawler::CrawMetaPost.execute(url: link) },
