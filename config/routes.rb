@@ -1,5 +1,3 @@
 Rails.application.routes.draw do
-  get "*path", to: 'home#index', constraints: {
-    path: /((?!rails|pack).)*/
-  }
+  get "*path", to: 'y_combinator#index', constraints: { path: /((?!rails|pack).)*/ }
 end
