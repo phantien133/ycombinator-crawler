@@ -1,12 +1,11 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
+  ruby: circleci/ruby@0.1.2
 
 jobs:
   build:
     docker:
       - image: quangtien133/ycombinator:latest
-    executor: ruby/default
     steps:
       - run:
           name: cd to app
@@ -15,7 +14,9 @@ jobs:
       - run:
           name: Which bundler?
           command: bundle -v
-      - ruby/bundle-install
+      - run:
+          name: bundle install
+          command: bundle
       - run:
           name: install package
           command: yarn
