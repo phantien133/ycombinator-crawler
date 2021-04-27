@@ -41,6 +41,7 @@ module.exports = function (api) {
       'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
       'babel-plugin-transform-react-class-to-function',
+      '@babel/plugin-transform-react-jsx',
       '@babel/transform-react-inline-elements',
       '@babel/plugin-syntax-jsx',
       isTestEnv && 'babel-plugin-dynamic-import-node',
