@@ -5,3 +5,5 @@ Style/InlineComment:
 Lint/AssignmentInCondition:
   Description: "Don't use assignment in conditions."
   Enabled: false
+Style/BlockComments:
+  Enabled: false

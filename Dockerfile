@@ -22,6 +22,6 @@ RUN cd $APP_ROOT && bundle
 ADD package.json $APP_ROOT
 ADD yarn.lock $APP_ROOT
 
-RUN npm install yarn
-RUN npm install eslint
-RUN cd $APP_ROOT && bundle
+RUN npm install -g yarn
+RUN npm install -g eslint
+RUN cd $APP_ROOT && yarn

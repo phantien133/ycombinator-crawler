@@ -22,7 +22,7 @@ jobs:
           command: yarn
       - run:
           name: check ruby conventions
-          command: rubocop
+          command: bundle exec rubocop
       - run:
           name: check ES conventions
           command: yarn run lint
