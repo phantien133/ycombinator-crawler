@@ -8,4 +8,5 @@ export const PageTitle = styled.div`
   letter-spacing: 1.2px;
   box-shadow: 0 1px 2px 0 rgba(40, 60, 80, 0.12);
   margin-bottom: 1px;
+  font-weight: bold;
 `;

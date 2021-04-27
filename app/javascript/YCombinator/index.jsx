@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 
 import { store, persistor } from './store';
 
-import NoMatchComponent from './components/NoMatch';
+import NoMatch from './components/NoMatch';
 import { theme } from './styles/theme';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner';
@@ -33,7 +33,7 @@ const YCombinatorHackerNews = () => (
             />
             <Switch>
               <Route path="/" component={YCombinator} />
-              <Route component={NoMatchComponent} />
+              <Route component={NoMatch} />
             </Switch>
             <GlobalStyle />
           </ErrorBoundary>

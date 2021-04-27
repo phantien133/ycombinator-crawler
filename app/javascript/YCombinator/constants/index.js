@@ -4,6 +4,7 @@ export const ActionTypes = keyMirror({
   UPDATE_NEWS: undefined,
   FETCH_NEWS: undefined,
   CLEAN_NEWS: undefined,
+  CHANGE_PAGE: undefined,
   ADD_ITEM: undefined,
   EDIT_ITEM: undefined,
   REMOVE_ITEM: undefined,

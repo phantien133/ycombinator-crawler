@@ -6,7 +6,7 @@ const DEFAULT_API_CONFIG = {
 };
 
 export default class RestApi {
-  constructor(config: Object = {}) {
+  constructor(config) {
     this.axiosClient = axios.create({
       ...DEFAULT_API_CONFIG,
       ...config,

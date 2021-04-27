@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
@@ -6,7 +5,10 @@ import AccessTime from 'rmdi/lib/AccessTime';
 import FavoriteBorder from 'rmdi/lib/FavoriteBorder';
 import Comment from 'rmdi/lib/Comment';
 import truncate from 'lodash/truncate';
+import isEmpty from 'lodash/isEmpty';
+import QueryString from 'query-string';
 
+import { HackerNews, FallbackImg } from '../../../styles/images';
 import { breakpoint } from '../../../styles/mixins';
 
 const Container = styled.ul`
@@ -29,7 +31,7 @@ const ItemsTitle = styled.li`
   word-wrap: break-word;
 `;
 const SiteName = styled.span`
-  color: ${(props) => props.theme.color.grayIcon};
+  color: ${(props) => props.theme.color.waterBlue};
   font-size: ${rem('15px')};
 `;
 
@@ -41,14 +43,14 @@ const ItemsDescription = styled.li`
   max-height: 5em;
   text-align: justify;
   margin-bottom: 5px;
-  font-size: ${rem('17px')};
+  font-size: ${rem('13px')};
 `;
 
 const IcoAccessTime = styled(AccessTime)`
   width: ${rem('20px')};
   height: ${rem('20px')};
   margin-left: 3px;
-  color: ${(props) => props.theme.color.waterBlue};
+  color: ${(props) => props.theme.color.grayIcon};
   margin-right: 6px;
   float: right;
 `;
@@ -75,50 +77,60 @@ const ItemsTime = styled.li`
   font-size: ${rem('15px')};
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-`;
-
-const ReactList = styled.li`
-  padding: 5px 20px;
   justify-content: space-between;
-  flex-direction: row;
-  display: flex;
-  font-family: 'HelveticaNeue-UltraLight';
 `;
 
-const ReactItem = styled.div`
+const StateItem = styled.div`
   font-size: ${rem('15px')};
   font-family: 'HelveticaNeue-UltraLight';
+`;
+
+const Image = styled.img`
+  display: block;
+  margin-left: auto;
+  margin-top: 10px;
+  margin-right: auto;
+  width: 90%;
+  max-height: 50%;
+  min-height: 40%;
+  background-image: url(${FallbackImg});
+  background-size: cover;
 `;
 
 const Items = (props) => {
   const { item = {} } = props;
   const {
-    id = 'id id',
-    rank = '1',
-    title = 'title titletitle titletitle titletitle titletitle titletitle titletitle titletitle titletitle title',
-    author = 'author',
-    age = 'age age',
-    points = 'points points',
-    comments = 'comments comments',
-    link = 'https://wikihoidap.org/upload/images/Public-la-gi-1.jpg',
-    site = 'site site',
+    id,
+    rank,
+    title,
+    author,
+    age,
+    points,
+    comments,
+    link,
+    site,
     meta: {
       image,
-      description,
-    } = {
-      image: 'https://wikihoidap.org/upload/images/Public-la-gi-1.jpg',
-      description: 'description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description ',
-    },
+      description = '',
+      content,
+    } = {},
   } = item;
   return (
-    <Container>
-      <img src={image} alt={title} />
+    <Container onClick={() => {
+      let targetUrl = link;
+      if (!isEmpty(content)) {
+        targetUrl = `/details/${id}?${QueryString.stringify({ link })}`;
+      }
+      window.open(targetUrl, '_blank');
+    }}
+    >
+      <Image src={image || HackerNews} alt={title} />
       <ItemsTitle>
-        {`${rank}. ${truncate(title, { length: 80 })}`}
+        {`${rank}. ${truncate(title, { length: 60 })}`}
         {
           site && (
             <SiteName>
+              {' '}
               (
               {site}
               )
@@ -127,22 +139,22 @@ const Items = (props) => {
         }
       </ItemsTitle>
       <ItemsTime>
-        {` by ${author} ${age}`}
-        <IcoAccessTime />
+        <StateItem>
+          {points.replace('points', '')}
+          <FavoriteBorderIco />
+        </StateItem>
+        <StateItem>
+          {comments.replace('comments', '')}
+          <CommentIco />
+        </StateItem>
+        <StateItem>
+          {` by ${author} ${age}`}
+          <IcoAccessTime />
+        </StateItem>
       </ItemsTime>
       <ItemsDescription>
-        {description && truncate(description, { length: 120 })}
+        {description && truncate(description, { length: 80 })}
       </ItemsDescription>
-      <ReactList>
-        <ReactItem>
-          {points}
-          <FavoriteBorderIco />
-        </ReactItem>
-        <ReactItem>
-          {comments}
-          <CommentIco />
-        </ReactItem>
-      </ReactList>
     </Container>
   );
 };

@@ -5,7 +5,6 @@ import { rem } from 'polished';
 
 import { flex } from '../styles/mixins';
 import { ImgWrong } from '../styles/images';
-import { PrimaryLink } from './common/Link';
 
 const ErrorWrap = styled.div`
   background: linear-gradient(70deg, #002036 50%, #0c304a 50%);
@@ -40,7 +39,7 @@ const ErrorText = styled.h2`
   padding: 20px 10px;
 `;
 
-const LinkTop = styled(PrimaryLink)`
+const LinkTop = styled.a`
   position: relative;
   z-index: 2;
   color: ${(props) => props.theme.color.white};
@@ -48,7 +47,7 @@ const LinkTop = styled(PrimaryLink)`
   font-size: ${rem('16px')};
   &:hover {
     opacity: 1;
-    color: #38a4f8;
+    color: ${(props) => props.theme.color.darkGreyBlue};
   }
 `;
 
@@ -92,7 +91,6 @@ class ErrorBoundary extends Component {
 
   componentDidCatch() {
     this.setState({ hasError: true });
-    // You can also log the error to an error reporting service
   }
 
   render() {

@@ -5,7 +5,8 @@ import Best from '../Best';
 
 const Routes = () => (
   <>
-    <Route path="/" component={Best} exact />
+    <Route path="" component={Best} exact />
+    <Route path="/page/:page" component={Best} exact />
     {/* <Route path="/search" component={Search} exact />  */}
   </>
 );
