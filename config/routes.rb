@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  get "*path", to: 'home#index', constraints: {
-    path: /((?!rails|pack).)*/
-  }
+  namespace :api do
+    namespace :v1 do
+      resources :news, only: %i[index show]
+    end
+  end
+
+  get "*path", to: 'y_combinator#index', constraints: { path: /((?!rails|pack).)*/ }
 end

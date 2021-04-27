@@ -22,6 +22,12 @@ RSpec.describe 'GetFullUrl' do
       it { is_expected.to be_nil }
     end
 
+    context 'with href is data string' do
+      let(:href) { 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABDCAMAAABdlVDoAAAC' }
+
+      it { is_expected.to eq href }
+    end
+
     context 'with href is a full url' do
       let(:href) { Faker::Internet.url(path: true) }
 

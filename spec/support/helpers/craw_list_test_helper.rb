@@ -14,6 +14,10 @@ module CrawListTestHelper
       title: Faker::Lorem.sentence,
       link: Faker::Internet.url,
       site: Faker::Internet.url,
+      points: Faker::Lorem.sentence,
+      comments: Faker::Lorem.sentence,
+      age: Faker::Lorem.sentence,
+      author: Faker::Lorem.sentence,
       meta: {},
     }
   end
@@ -38,6 +42,11 @@ module CrawListTestHelper
             </center>
           </td>
           <td class="title"><a href="#{post[:link]}" class="storylink">#{post[:title]}</a><span class="sitebit comhead">#{sitestr}</span></td>
+      </tr><tr >
+        <td class="subtext">
+          <span class="score" id="score_26934577">#{post[:points]}</span> by <a href="user?id=azhenley" class="hnuser">#{post[:author]}</a>
+          <span class="age"><a href="item?id=26934577">#{post[:age]}</a></span> <span id="unv_26934577"></span> | <a href="item?id=26934577">#{post[:comments]}</a>
+        </td>
       </tr>
     POST
   end
@@ -72,7 +81,7 @@ module CrawListTestHelper
                 <tr>
                   <td>
                       <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
-                        #{posts.map { |post| factory_render_post(post) }.join("\n\t")}
+                        #{posts.map { |post| factory_render_post(post) }.join("")}
                         <tr class="spacer" style="height:5px"></tr>
                         <tr class="morespace" style="height:10px"></tr>
                         #{more ? render_more : ''}

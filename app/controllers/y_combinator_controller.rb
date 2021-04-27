@@ -1,0 +1,2 @@
+class YCombinatorController < ApplicationController
+end
