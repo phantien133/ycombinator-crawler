@@ -13,6 +13,10 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+Dir['./spec/support/helpers/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/shared_contexts/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/shared_examples/**/*.rb'].sort.each { |f| require f }
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
