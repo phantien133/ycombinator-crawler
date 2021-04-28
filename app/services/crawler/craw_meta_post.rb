@@ -11,7 +11,7 @@ class Crawler::CrawMetaPost < Crawler::Base
     meta[:image] = correct_href(image, url) if image.present?
 
     content = read_content(doc)
-    meta[:content] = content if content.present?
+    meta[:content] = content if content.present? && Nokogiri::HTML(content).content.present?
     meta
   rescue Crawler::Errors::Uncrawable
     {}
@@ -26,7 +26,6 @@ class Crawler::CrawMetaPost < Crawler::Base
         node = doc.css("meta[name='#{property}'], meta[property='#{property}']").first
         tag_meta[tag.to_sym] = node['content'] if node.present?
       end
-      break tag_meta if tag_meta.present?
     end.tap { |meta| meta[:crawable] = true }
   end
 
@@ -45,6 +44,7 @@ class Crawler::CrawMetaPost < Crawler::Base
   end
 
   def read_content(doc)
+    return '' if doc.blank?
     Readability::Document.new(doc).content
   rescue
     nil

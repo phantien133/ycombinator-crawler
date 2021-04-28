@@ -5,7 +5,9 @@ import {
 import {
   changePage,
   fetchNews,
+  fetchNew,
   updateNews,
+  updateNew,
 } from '../actions/newsActions';
 import { responseDataSelector } from '../selectors/newsSelector';
 import { newsApi } from '../services/api/NewsApi';
@@ -23,8 +25,21 @@ export function* fetchNewsSaga(actions) {
   }
 }
 
+export function* fetchNewSaga(actions) {
+  const { payload: { id, link } } = actions;
+  try {
+    const response = yield call([newsApi, newsApi.detail], id, link);
+    yield put(updateNew({ ...response.data, id }));
+  } catch (e) {
+    setTimeout(function* () {
+      yield put(fetchNew({ id, link }));
+    }, 30000);
+  }
+}
+
 export default function* () {
   yield all([
     takeLatest(fetchNews, fetchNewsSaga),
+    takeLatest(fetchNew, fetchNewSaga),
   ]);
 }

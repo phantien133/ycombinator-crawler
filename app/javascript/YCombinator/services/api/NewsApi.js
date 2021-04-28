@@ -12,9 +12,8 @@ class NewsApi extends RestApi {
   }
 
   detail(id, link) {
-    return this.client.get(ROUTES.detailPath, {
+    return this.client.get(`${ROUTES.detailPath}/${id}`, {
       params: {
-        id,
         link,
       },
     });
