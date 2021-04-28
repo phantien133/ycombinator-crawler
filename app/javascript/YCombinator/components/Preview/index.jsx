@@ -6,6 +6,7 @@ import { mapProps } from 'recompose';
 import styled from 'styled-components';
 
 import { rem } from 'polished';
+import { isEmpty } from 'lodash';
 import { fetchNew } from '../../actions/newsActions';
 import { newSelector } from '../../selectors/newsSelector';
 import withHooks from '../../utils/withHooks';
@@ -51,9 +52,13 @@ const PreviewItems = (props) => {
       title,
       image,
       content,
+      loaded,
     } = {},
     link,
   } = props;
+  if (loaded && isEmpty(content)) {
+    window.open(link);
+  }
   return (
     <Container onClick={() => {
       window.open(link, '_blank');

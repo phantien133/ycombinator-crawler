@@ -29,11 +29,9 @@ export function* fetchNewSaga(actions) {
   const { payload: { id, link } } = actions;
   try {
     const response = yield call([newsApi, newsApi.detail], id, link);
-    yield put(updateNew({ ...response.data, id }));
+    yield put(updateNew({ ...response.data, id, loaded: true }));
   } catch (e) {
-    setTimeout(function* () {
-      yield put(fetchNew({ id, link }));
-    }, 30000);
+    yield put(updateNew({ id, loaded: true }));
   }
 }
 

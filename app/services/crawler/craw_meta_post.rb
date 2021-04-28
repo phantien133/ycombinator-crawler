@@ -11,7 +11,9 @@ class Crawler::CrawMetaPost < Crawler::Base
     meta[:image] = correct_href(image, url) if image.present?
 
     content = read_content(doc)
-    meta[:content] = content if content.present? && Nokogiri::HTML(content).content.present?
+    if content.present? && Nokogiri::HTML(content).content.present?
+      meta[:content] = content
+    end
     meta
   rescue Crawler::Errors::Uncrawable
     {}
