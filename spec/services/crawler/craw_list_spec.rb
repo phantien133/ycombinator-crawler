@@ -58,7 +58,7 @@ RSpec.describe Crawler::CrawList do
           subject { Crawler::CrawList.execute(list_path: list_path) }
 
           it do
-            url = URI("#{Crawler::CrawList::BA_YCOM_HOST}/#{list_path}?page=#{1}")
+            url = URI("#{Crawler::CrawList::BA_YCOM_HOST}/#{list_path}?p=#{1}")
             expect(Net::HTTP).to receive(:get).with(url).exactly(1)
             subject
           end
@@ -66,7 +66,7 @@ RSpec.describe Crawler::CrawList do
 
         context 'with param page' do
           it 'query correct page' do
-            url = URI("#{Crawler::CrawList::BA_YCOM_HOST}/#{list_path}?page=#{page}")
+            url = URI("#{Crawler::CrawList::BA_YCOM_HOST}/#{list_path}?p=#{page}")
             expect(Net::HTTP).to receive(:get).with(url).exactly(1)
             subject
           end

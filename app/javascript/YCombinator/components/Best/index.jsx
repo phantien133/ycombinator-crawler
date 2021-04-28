@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import map from 'lodash/map';
 import { compose, branch, renderComponent } from 'recompose';
 import { connect } from 'react-redux';
-
 import { rem } from 'polished';
+
 import { breakpoint } from '../../styles/mixins';
-import Item from './Item';
+import Item from '../Item';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { newsSelector } from '../../selectors/newsSelector';
 import withHooks from '../../utils/withHooks';
