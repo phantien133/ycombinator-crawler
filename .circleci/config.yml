@@ -26,6 +26,9 @@ jobs:
       - run:
           name: check ES conventions
           command: yarn run lint
+      - run:
+          name: Unittest
+          command: bundle exec rspec
   request-approval:
     docker:
       - image: quangtien133/ycombinator:latest
